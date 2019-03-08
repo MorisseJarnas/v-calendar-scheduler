@@ -5,7 +5,7 @@
          @click.stop="eventClicked"
          :style="eventStyles">
         <span class="v-cal-event-time">{{ event.startTime | formatEventTime(use12) }}</span>
-        <span class="v-cal-event-name">{{ event.displayText }}</span>
+        <span class="v-cal-event-name color-test">{{ event.displayText }}</span>
     </div>
 </template>
 
