@@ -78,13 +78,13 @@
                         'height': this.displayHeight + 'px',
                     });
 
-                    if ( this.event.overlaps > 0 ) {
-                        const width = 100 / ( this.event.overlaps + 1 );
-                        styles.push({
-                            'width': width + '%',
-                            'left': width + '%'
-                        });
-                    }
+                    // if ( this.event.overlaps > 0 ) {
+                    //     const width = 100 / ( this.event.overlaps + 1 );
+                    //     styles.push({
+                    //         'width': width + '%',
+                    //         'left': width + '%'
+                    //     });
+                    // }
 
                     if ( this.event.startTime.minutes() > 0 ) {
                         const distance = ( this.ancestorHeight / 60 ) * this.event.startTime.minutes();
@@ -98,7 +98,7 @@
             },
             eventClasses() {
                 return {
-                    'is-overlapping': this.event.overlaps > 0
+                    // 'is-overlapping': this.event.overlaps > 0
                 }
             }
         },
