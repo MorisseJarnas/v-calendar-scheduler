@@ -230,6 +230,7 @@
     .v-cal-hour.all-day,
     .v-cal-day__hour-block.all-day {
       border-width: 3px !important;
+      text-align: center;
     }
   }
 
@@ -261,7 +262,7 @@
   
       .v-cal-hour-text {
         transform: translateY(-26px);
-        background-color: #fff;
+        background-image: linear-gradient(to right, transparent, white, white, white, transparent);
         text-align: center;
         
         &.is-now {
