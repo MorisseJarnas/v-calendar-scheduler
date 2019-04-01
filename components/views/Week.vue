@@ -4,11 +4,12 @@
       <div class="v-cal-weekdays__padding">
         <div class="v-cal-times">
           <!--Fake, hidden time-->
-          <div class="v-cal-hour">00:00 <template v-if="use12">PM</template></div>
+          <div class="v-cal-hour">{{allDayLabel}}</div>
+          <!-- <div class="v-cal-hour">00:00 <template v-if="use12">PM</template></div> -->
         </div>
       </div>
       <div class="v-cal-weekday__wrapper">
-        <div class="v-cal-weekday-item" v-for="day in days">{{ day.d.format('ddd DD/MM') }}</div>
+        <div class="v-cal-weekday-item" v-for="day in days">{{ day.d.locale(dataLocaleConfig).format('ddd ll') }}</div>
       </div>
     </div>
     <div class="v-cal-days">
@@ -70,6 +71,7 @@
     import EventItem from '../EventItem';
     import IsView from '../mixins/IsView';
     import ShowsTimes from '../mixins/ShowsTimes';
+    import config from '../../utils/config';
 
     export default {
         name: "week",
@@ -78,6 +80,7 @@
         data() {
             return {
                 days: [],
+                dataLocaleConfig: config.translation_locale,
                 // newEvents: JSON.parse(JSON.stringify(this.events))
             }
         },
