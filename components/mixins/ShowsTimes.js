@@ -38,10 +38,7 @@ export default {
   },
   filters: {
     formatTime( time, use12 = false ) {
-      if ( use12 )
-        return time.format('hh:mm A');
-
-      return time.format('HH:mm');
+      return time.locale(config.translation_locale).format('LT')
     }
   }
 }
