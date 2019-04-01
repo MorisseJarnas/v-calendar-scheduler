@@ -14,7 +14,11 @@
     <div class="v-cal-days">
       <div class="v-cal-times">
         <div class="v-cal-hour all-day">{{ allDayLabel }}</div>
-        <div class="v-cal-hour" :class="{ 'is-now': time.isSame(now, 'hour') }" v-for="time in times">{{ time | formatTime(use12) }}</div>
+
+        <div class="v-cal-hour-container" v-for="time in times">
+          <div class="v-cal-hour-text" :class="{ 'is-now': time.isSame(now, 'hour') }">{{ time | formatTime(use12) }}</div>
+        </div>
+        
       </div>
       <div class="v-cal-days__wrapper">
         <div class="v-cal-day v-cal-day--week" v-for="day in days" :class="{ 'is-today': day.isToday, 'is-disabled': day.isDisabled }">
