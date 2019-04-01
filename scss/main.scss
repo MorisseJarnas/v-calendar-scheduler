@@ -251,6 +251,24 @@
         border-bottom: 1px solid $v-cal-times-border-color;
       }
     }
+
+    .v-cal-hour-container {
+      padding: 15px;
+  
+      &:not(:last-child) {
+        border-bottom: 1px solid #EAF0F4;
+      }
+  
+      .v-cal-hour-text {
+        transform: translateY(-26px);
+        background-color: #fff;
+        text-align: center;
+        
+        &.is-now {
+          font-weight: bold;
+        }
+      }
+    }
   }
 
   &.v-cal-content--week .v-cal-days .v-cal-days__wrapper,
