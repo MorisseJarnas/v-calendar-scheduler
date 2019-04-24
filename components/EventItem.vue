@@ -71,20 +71,13 @@
                 styles.push({
                     'backgroundColor': this.event.color,
                     'color': this.event.color,
+                    '--current-event-color': this.event.color,
                 });
 
                 if ( this.hasDynamicSize ) {
                     styles.push({
                         'height': this.displayHeight + 'px',
                     });
-
-                    // if ( this.event.overlaps > 0 ) {
-                    //     const width = 100 / ( this.event.overlaps + 1 );
-                    //     styles.push({
-                    //         'width': width + '%',
-                    //         'left': width + '%'
-                    //     });
-                    // }
 
                     if ( this.event.startTime.minutes() > 0 ) {
                         const distance = ( this.ancestorHeight / 60 ) * this.event.startTime.minutes();
@@ -97,9 +90,7 @@
                 return styles;
             },
             eventClasses() {
-                return {
-                    // 'is-overlapping': this.event.overlaps > 0
-                }
+                return {}
             }
         },
         filters: {

@@ -119,7 +119,7 @@
       height: 100%;
       top: 0;
       right: 0;
-      background: linear-gradient(to right, rgba(255,255,255,.01), currentColor 75%);
+      background: linear-gradient(to right, rgba(255,255,255,.01), var(--current-event-color) 75%);
     }
 
     &:not(:last-child) {
