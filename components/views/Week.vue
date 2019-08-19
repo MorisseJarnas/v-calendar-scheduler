@@ -95,11 +95,10 @@
                 //  Reset events
                 // this.newEvents = JSON.parse(JSON.stringify(this.events));
 
-                this.days = [];
-
                 let now = moment();
 
-                let temp = moment( this.activeDate ).day(moment.localeData().firstDayOfWeek());
+                // let temp = moment( this.activeDate ).day(moment.localeData().firstDayOfWeek());
+                let temp = moment( this.activeDate );
                 let w = temp.week();
 
                 this.days = [];
