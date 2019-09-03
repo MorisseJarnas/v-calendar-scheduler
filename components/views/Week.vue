@@ -81,7 +81,6 @@
             return {
                 days: [],
                 dataLocaleConfig: config.translation_locale,
-                // newEvents: JSON.parse(JSON.stringify(this.events))
             }
         },
         mounted() {
@@ -92,43 +91,42 @@
                 EventBus.$emit('time-clicked', data)
             },
             buildCalendar() {
-                //  Reset events
-                // this.newEvents = JSON.parse(JSON.stringify(this.events));
 
                 let now = moment();
-
-                // let temp = moment( this.activeDate ).day(moment.localeData().firstDayOfWeek());
+                
                 let temp = moment( this.activeDate );
-                let w = temp.week();
 
                 this.days = [];
 
-                do {
-                    const day = moment(temp);
+                let eventLength = Math.ceil(moment.duration(moment(this.maxDate).diff(moment(this.minDate))).asDays());
 
-                    const dayEvents = this.events.filter( e => e.date.isSame(day, 'day') )
-                        .sort( (a, b) => {
-                            if ( !a.startTime ) return -1;
-                            if ( !b.startTime ) return 1;
-                            return moment(a.startTime).format('HH') - moment(b.startTime).format('HH');
-                        });
-                    const mappedEvents = dayEvents.map( event => {
-                        event.overlaps = dayEvents.filter( e => moment(event.startTime).isBetween( moment(e.startTime), moment(e.endTime) ) && e !== event ).length;
-                        return event;
-                    });
+                for (let index = 1; index <= eventLength; index++) {
+                  
+                  const day = moment(temp);
 
-                    let newDay = {
-                        d: day,
-                        isPast: temp.isBefore( now, 'day' ),
-                        isToday: temp.isSame( now, 'day' ),
-                        isDisabled: this.isDayDisabled(temp),
-                        availableTimes: this.times.map( time => moment(time).dayOfYear( day.dayOfYear() ) ),
-                        events: mappedEvents
-                    };
-                    this.days.push(newDay);
+                  const dayEvents = this.events.filter( e => e.date.isSame(day, 'day') )
+                      .sort( (a, b) => {
+                          if ( !a.startTime ) return -1;
+                          if ( !b.startTime ) return 1;
+                          return moment(a.startTime).format('HH') - moment(b.startTime).format('HH');
+                      });
+                  const mappedEvents = dayEvents.map( event => {
+                      event.overlaps = dayEvents.filter( e => moment(event.startTime).isBetween( moment(e.startTime), moment(e.endTime) ) && e !== event ).length;
+                      return event;
+                  });
 
-                    temp.add( 1, 'day' );
-                } while ( temp.week() === w );
+                  let newDay = {
+                      d: day,
+                      isPast: temp.isBefore( now, 'day' ),
+                      isToday: temp.isSame( now, 'day' ),
+                      isDisabled: this.isDayDisabled(temp),
+                      availableTimes: this.times.map( time => moment(time).dayOfYear( day.dayOfYear() ) ),
+                      events: mappedEvents
+                  };
+                  this.days.push(newDay);
+
+                  temp.add( 1, 'day' );
+                }
 
             }
         },
