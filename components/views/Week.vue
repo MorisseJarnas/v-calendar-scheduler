@@ -91,17 +91,16 @@
                 EventBus.$emit('time-clicked', data)
             },
             buildCalendar() {
-
                 let now = moment();
                 
                 let temp = moment( this.activeDate );
-
+                
                 this.days = [];
 
                 let eventLength = Math.ceil(moment.duration(moment(this.maxDate).diff(moment(this.minDate))).asDays());
 
-                for (let index = 1; index <= eventLength; index++) {
-                  
+                let count = 0;
+                do {
                   const day = moment(temp);
 
                   const dayEvents = this.events.filter( e => e.date.isSame(day, 'day') )
@@ -110,6 +109,7 @@
                           if ( !b.startTime ) return 1;
                           return moment(a.startTime).format('HH') - moment(b.startTime).format('HH');
                       });
+                      
                   const mappedEvents = dayEvents.map( event => {
                       event.overlaps = dayEvents.filter( e => moment(event.startTime).isBetween( moment(e.startTime), moment(e.endTime) ) && e !== event ).length;
                       return event;
@@ -126,8 +126,10 @@
                   this.days.push(newDay);
 
                   temp.add( 1, 'day' );
-                }
+                  
+                  count++;
 
+                } while ( count < eventLength );
             }
         },
         watch: {

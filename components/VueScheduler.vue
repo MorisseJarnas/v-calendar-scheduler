@@ -309,10 +309,10 @@
                     maxDate: this.maxDate,
                     use12: this.use12,
                     events: this.newEvents.filter( event => {
-                        return event.date.isSame(this.activeDate, this.activeView);
+                        return event.date.isBetween(this.minDate, this.maxDate, 'day', '[]');
                     })
                 };
-
+                
                 if ( this.activeView === 'week' || this.activeView === 'day') {
                     props.allDayLabel = this.labels.all_day;
                     props.timeRange = this.timeRange;
