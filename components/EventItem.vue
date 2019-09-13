@@ -4,10 +4,18 @@
          :class="eventClasses"
          @click.stop="eventClicked"
          :style="eventStyles">
-        <span v-if="isNewProposal" class="calendar-new-proposal"><i class="fas fa-exclamation"></i></span>
-        <span v-if="isRequestStillPending" class="calendar-request-pending"><i class="fas fa-question"></i></span>
-        <span v-if="isMeetingValidated" class="calendar-meeting-validated"><i class="fas fa-check"></i></span>
-        <span class="v-cal-event-time is-proposal">{{ event.startTime | formatEventTime(use12) }}</span>
+        <span v-if="isNewProposal || isRequestStillPending || isMeetingValidated" class="cal-event-icon">
+            <span class="fa-stack">
+                <i class="far fa-calendar fa-stack-2x"></i>
+                <i class="fa-stack-1x" :class="iconEvent"></i>
+            </span>
+        </span>
+        <span v-if="isGoogleEvent || isOutlookEvent" class="cal-event-icon">
+            <span class="icon-single">
+                <i :class="iconEvent"></i>
+            </span>
+        </span>
+        <span class="v-cal-event-time">{{ event.startTime | formatEventTime(use12) }}</span>
         <span class="v-cal-event-name color-test">{{ event.displayText }}</span>
     </div>
 </template>
@@ -77,12 +85,6 @@
                     '--current-event-color': this.event.color,
                 });
 
-                if ( this.isNewProposal ) {
-                    styles.push({
-                        'border': '2px outset orangered',
-                    });
-                }
-
                 if ( this.hasDynamicSize ) {
                     styles.push({
                         'height': this.displayHeight + 'px',
@@ -98,14 +100,40 @@
 
                 return styles;
             },
+            isPlatformEvent() {
+                return this.event.provider == 'platform';
+            },
+            isGoogleEvent() {
+                return this.event.provider == 'google';
+            },
+            isOutlookEvent() {
+                return this.event.provider == 'outlook';
+            },
             isNewProposal() {
-                return this.event.src == 'database' && this.event.status == 0 && this.event.isHost == false;
+                return this.isPlatformEvent && this.event.status == 0 && this.event.isHost == false;
             },
             isRequestStillPending() {
-                return this.event.src == 'database' && this.event.status == 0 && this.event.isHost == true;
+                return this.isPlatformEvent && this.event.status == 0 && this.event.isHost == true;
             },
             isMeetingValidated() {
-                return this.event.src == 'database' && this.event.status == 1;
+                return this.isPlatformEvent && this.event.status == 1;
+            },
+            iconEvent() {
+                switch (this.event.provider) {
+                    case 'platform':
+                        if (this.isNewProposal) {
+                            return 'fas fa-exclamation';
+                        } else if(this.isRequestStillPending) {
+                            return 'fas fa-question';
+                        } else if (this.isMeetingValidated) {
+                            return 'fas fa-check';
+                        }
+                        return '';
+                    case 'google':
+                        return 'fab fa-google';
+                    case 'outlook':
+                        return 'fab fa-microsoft';
+                }
             },
             eventClasses() {
                 return {}
