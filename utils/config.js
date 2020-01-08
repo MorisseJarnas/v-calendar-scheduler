@@ -14,6 +14,7 @@ export const defaultViews = ['month', 'week', 'day'];
 
 let config = {
     locale: 'en',
+    timezone: 'Europe/Berlin',
     showTodayButton: true,
     minDate: null,
     maxDate: null,

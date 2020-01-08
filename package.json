@@ -27,7 +27,8 @@
     "events"
   ],
   "dependencies": {
-    "moment": "^2.22.1"
+    "moment": "^2.22.1",
+    "moment-timezone": "^0.5.23"
   },
   "peerDependencies": {
     "vue": "^2.5.2"
